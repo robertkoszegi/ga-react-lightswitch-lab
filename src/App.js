@@ -1,34 +1,30 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css';
 import Top from './components/Top/Top'
 import Bottom from './components/Bottom/Bottom'
 
 
-class App extends Component {
+export default function App () {
 
-  state = {
-    switch: "off",
+  const [switchData, setSwitchData] = useState({
+    position: "off",
     backgroundColor: "black"
+  });
+
+  const flipSwitch = () => {
+    setSwitchData({
+      position: switchData.position === "off" ? "on" : "off", 
+      backgroundColor: switchData.backgroundColor === "black" ? "white" : "black"
+    });
   }
 
-  handleLightswitch = () => {
-    this.setState(this.state.switch === "off" ? {switch: "on" } : {switch: "off"})
-    this.setState(this.state.switch === "off" ? {backgroundColor: "white" } : {backgroundColor: "black"})
-
-    console.log(this.state.switch, this.state.backgroundColor)
-    
-  }
-
-
-  render() {
-    return (
-      <div className='App'>Lightswitch
-        <Top backgroundColor={this.state.backgroundColor}/>
-        <Bottom handleLightswitch={this.handleLightswitch} switch={this.state.switch}/>
-      </div>
-    )
-  }
+  return (
+    <div className='App'>Lightswitch
+      <Top backgroundColor={switchData.backgroundColor}/>
+      <Bottom flipSwitch={flipSwitch} position={switchData.position}/>
+    </div>
+  )
 }
 
 
-export default App;
+
